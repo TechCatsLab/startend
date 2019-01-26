@@ -49,6 +49,8 @@ page {
 
   import BaseMixin from '../mixins/base'
 
+  import { login } from '../util/wx'
+
   export default class Welcome extends wepy.page {
     config = {
       navigationBarTitleText: ''
@@ -68,7 +70,7 @@ page {
     events = {
     }
 
-    onLoad() {
+    async onLoad() {
       if (wepy.canIUse('setNavigationBarColor')) {
         wepy.setNavigationBarColor({
           frontColor: '#000000',
@@ -80,6 +82,19 @@ page {
         this.$redirect('/pages/task/index')
         this.$switch('/pages/task/index')
       }, 1000)
+
+      try {
+        const res = await login()
+        if (res === true) {
+          return
+        }
+
+        if (res.code) {
+          console.log(`welcome page login :${res.code}`)
+        }
+      } catch (err) {
+        console.log(`welcome page error :${err}`)
+      }
     }
   }
 </script>
