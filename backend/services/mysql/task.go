@@ -51,7 +51,7 @@ var (
 		`INSERT INTO task.task (user_id,content,started,ended) VALUES(?,?,?,?)`,
 		`SELECT content,comment,started,ended,stoped,status FROM task.task WHERE id = ? LOCK IN SHARE MODE`,
 		`SELECT id,content,comment,started,ended,stoped,status FROM task.task WHERE user_id = ? LIMIT (?-1)*10, 10 LOCK IN SHARE MODE`,
-		`SELECT id,content,comment,started,ended,stoped FROM task.task WHERE user_id =? and status = ? LIMIT (?-1)*10, 10 LOCK IN SHARE MODE`,
+		`SELECT id,content,comment,started,ended,stoped FROM task.task WHERE user_id = ? and status = ? LIMIT (?-1)*10, 10 LOCK IN SHARE MODE`,
 		`UPDATE task.task SET status = ? , comment = ? , stoped = NOW() WHERE id = ? LIMIT 1`,
 	}
 )

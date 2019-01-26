@@ -1,0 +1,18 @@
+hash: 05df7c714131d10287f8323a517632cdc9874226f2f2ebc8967c8d572818a514
+updated: 2019-01-22T17:50:37.874976+08:00
+imports:
+- name: github.com/json-iterator/go
+  version: 1624edc4454b8682399def8740d46db5e4362ba4
+- name: github.com/qiniu/api.v7
+  version: bc6998c1186aafa0eadc6396d28fc7e77a594a2a
+- name: github.com/shirou/gopsutil
+  version: ccc1c1016bc5d10e803189ee43417c50cdde7f1b
+- name: golang.org/x/net
+  version: ed066c81e75eba56dd9bd2139ade88125b855585
+  subpackages:
+  - context
+- name: golang.org/x/sys
+  version: 054c452bb702e465e95ce8e7a3d9a6cf0cd1188d
+  subpackages:
+  - unix
+testImports: []
