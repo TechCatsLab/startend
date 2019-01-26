@@ -1,0 +1,42 @@
+<style lang="less">
+</style>
+
+<template>
+  <view>
+    <text>欢迎</text>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+
+  import DebugMixin from '../mixins/debug'
+
+  export default class Welcome extends wepy.page {
+    config = {
+      navigationBarTitleText: ''
+    }
+
+    components = {
+    }
+
+    mixins = [DebugMixin]
+
+    computed = {
+    }
+
+    methods = {
+    }
+
+    events = {
+    }
+
+    onLoad() {
+      setTimeout(() => {
+        console.log('jumping...')
+        this.$redirect('/pages/index')
+        this.$switch('/pages/index')
+      }, 3000)
+    }
+  }
+</script>

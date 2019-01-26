@@ -1,0 +1,96 @@
+<style lang="less">
+.container {
+  padding: 36rpx;
+}
+
+.card {
+  width: 100%;
+  height: 720rpx;
+  border-radius: 20rpx;
+  box-shadow: 10rpx 10rpx 40rpx 8rpx #e8e8e8;
+}
+.slogan {
+  width: 100%;
+
+  image {
+    border-top-left-radius: 20rpx;
+    border-top-right-radius: 20rpx;
+    width: 100%;
+    height: 540rpx;
+  }
+}
+
+.detail {
+  height: 180rpx;
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+
+  .icon {
+    width: 96rpx;
+    height: 96rpx;
+    border-radius: 12rpx;
+    margin-left: 24rpx;
+    margin-top: 42rpx;
+    margin-right: 24rpx;
+  }
+
+  .desc {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    margin-top: 42rpx;
+
+    .title {
+      font-size: 36rpx;
+    }
+
+    .abstract {
+      font-size: 24rpx;
+    }
+  }
+
+  .button {
+    display:flex;
+    justify-content:center;
+    align-items: center;
+    margin-right: 24rpx;
+
+    .open {
+      width: 180rpx;
+      border-radius: 40rpx;
+    }
+  }
+}
+
+</style>
+
+<template>
+  <view class="container">
+    <view class="card">
+      <view class="slogan">
+        <image mode="scaleToFill" src="{{item.picture}}" />
+      </view>
+      <view class="detail">
+        <image class="icon" mode="scaleToFill" src="{{item.icon}}" />
+        <view class="desc">
+          <text class="title">{{item.title}}</text>
+          <text class="abstract">{{item.abstract}}</text>
+        </view>
+        <view class="button">
+          <van-button type="danger" size="small" custom-class="open">开始</van-button>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+
+export default class Application extends wepy.component {
+  props = {
+    item: Object
+  }
+}
+</script>
