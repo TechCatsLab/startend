@@ -1,9 +1,46 @@
 <style lang="less">
+page {
+  height: 100%;
+  background: #f6f1db;
+}
+
+.welcome {
+  height: 100%;
+  padding: 0rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .drawing {
+    padding: 0rpx;
+    margin-top: 96rpx;
+  }
+
+  .title {
+    margin-top: 64rpx;
+    margin-bottom: 32rpx;
+    font-size: 48rpx;
+    color: #6f3f09;
+  }
+
+  .desc {
+    font-size: 32rpx;
+    color: #a96a22;
+  }
+}
 </style>
 
 <template>
-  <view>
-    <text>欢迎</text>
+  <view class="welcome">
+    <image
+      class="drawing"
+      src="/assets/images/programming.svg"
+      mode="aspectFit" />
+    <text class="title text-center">诗经·大雅·荡</text>
+    <text class="desc">荡荡上帝 下民之辟</text>
+    <text class="desc">疾威上帝 其命多辟</text>
+    <text class="desc">天生烝民 其命匪谌</text>
+    <text class="desc">靡不有初 鲜克有终</text>
   </view>
 </template>
 
@@ -32,11 +69,15 @@
     }
 
     onLoad() {
+      wepy.setNavigationBarColor({
+        frontColor: '#000000',
+        backgroundColor: '#f6f1db'
+      })
+
       setTimeout(() => {
-        console.log('jumping...')
         this.$redirect('/pages/index')
         this.$switch('/pages/index')
-      }, 3000)
+      }, 5000)
     }
   }
 </script>
