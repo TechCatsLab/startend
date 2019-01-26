@@ -15,9 +15,8 @@ func main() {
 	router := gin.Default()
 
 	services.Load(databaseConn)
-
 	middlewares.Install(router)
-	routes.Install(router)
+	routes.Install(router, databaseConn)
 
 	s := &http.Server{
 		Addr:    configuration.Address,

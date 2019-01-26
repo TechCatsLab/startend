@@ -30,6 +30,7 @@ var (
 func (us *UserServiceImpl) Initialize() error {
 	_, err := us.DB.Exec(userSqls[sqlCreateUserTable])
 	if err != nil {
+
 		return err
 	}
 
@@ -40,15 +41,18 @@ func (us *UserServiceImpl) Initialize() error {
 func (us *UserServiceImpl) create(user_id string) (uint32, error) {
 	result, err := us.DB.Exec(userSqls[sqlInsertUser], user_id)
 	if err != nil {
+
 		return 0, err
 	}
 
 	if rows, _ := result.RowsAffected(); rows == 0 {
+
 		return 0, errQueryFailed
 	}
 
 	id, err := result.LastInsertId()
 	if err != nil {
+
 		return 0, err
 	}
 
@@ -58,13 +62,16 @@ func (us *UserServiceImpl) create(user_id string) (uint32, error) {
 //Query user if register
 func (us *UserServiceImpl) QueryUid(user_id string) (uid uint32, err error) {
 	err = us.DB.QueryRow(userSqls[sqlQueryUser], user_id).Scan(&uid)
+
 	switch {
 	case err == errNoRows:
 		if uid, err = us.create(user_id); err != nil {
+
 			return
 		}
 		break
 	case err != nil:
+
 		return 0, err
 	}
 

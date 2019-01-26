@@ -10,5 +10,5 @@ func Install(router *gin.Engine) {
 	router.Use(gin.Recovery())
 
 	installCorsMiddleware(router)
-	installJWTMiddleware(router)
+	// installJWTMiddleware(router)
 }

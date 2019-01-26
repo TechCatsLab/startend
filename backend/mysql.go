@@ -15,7 +15,7 @@ func init() {
 		err error
 	)
 
-	databaseConn, err = sql.Open("mysql", "root:123456@tcp(127.0.0.1:8806)/main?charset=utf8")
+	databaseConn, err = sql.Open("mysql", "root:123456@tcp(127.0.0.1:8806)/?charset=utf8")
 	if err != nil {
 		panic(err)
 	}
