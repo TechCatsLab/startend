@@ -1,0 +1,92 @@
+<style lang="less">
+page {
+  height: 100%;
+  background: #f1f0ed;
+}
+
+.self {
+  padding: 0rpx;
+
+  .painting {
+    width: 750rpx;
+    padding: 0rpx;
+    margin: 0rpx;
+  }
+
+  .seperator {
+    margin-top: 32rpx;
+    margin-bottom: 8rpx;
+  }
+
+  .title {
+    font-size: 36rpx;
+    color: #3e3841;
+    margin-left: 32rpx;
+  }
+}
+</style>
+
+<template>
+  <view class="self">
+    <image
+      class="painting"
+      src="https://task.lizebang.top/image/wheat.jpg"
+      mode="widthFix" />
+    
+    <!-- Personal -->
+    <view class="seperator">
+      <text class="title">个人信息</text>
+    </view>
+    <van-cell-group>
+      <van-cell title="昵称" value="内容" />
+      <van-cell title="单元格" value="内容" border="{{ false }}" />
+    </van-cell-group>
+
+    <!-- Author -->
+    <view class="seperator">
+      <text class="title">贡献者</text>
+    </view>
+    <van-cell-group>
+      <van-cell title="创意/主程" value="yhrddr" />
+      <van-cell title="视觉效果" value="Jiayin Chai" />
+      <van-cell title="小程序实现" value="fengyfei" />
+      <van-cell title="服务器资源提供" value="lizebang" />
+      <van-cell title="后勤保障" value="yangchengkai1" border="{{ false }}" />
+    </van-cell-group>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+
+  import BaseMixin from '../../mixins/base'
+
+  export default class Self extends wepy.page {
+    config = {
+      navigationBarTitleText: '关于'
+    }
+
+    components = {
+    }
+
+    mixins = [BaseMixin]
+
+    computed = {
+    }
+
+    methods = {
+    }
+
+    events = {
+    }
+
+    onLoad() {
+      if (wepy.canIUse('setNavigationBarColor')) {
+        wepy.setNavigationBarColor({
+          frontColor: '#000000',
+          backgroundColor: '#f6f1db'
+        })
+      }
+    }
+  }
+</script>

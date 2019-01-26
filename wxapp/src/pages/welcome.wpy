@@ -47,7 +47,7 @@ page {
 <script>
   import wepy from 'wepy'
 
-  import DebugMixin from '../mixins/debug'
+  import BaseMixin from '../mixins/base'
 
   export default class Welcome extends wepy.page {
     config = {
@@ -57,7 +57,7 @@ page {
     components = {
     }
 
-    mixins = [DebugMixin]
+    mixins = [BaseMixin]
 
     computed = {
     }
@@ -69,15 +69,17 @@ page {
     }
 
     onLoad() {
-      wepy.setNavigationBarColor({
-        frontColor: '#000000',
-        backgroundColor: '#f6f1db'
-      })
+      if (wepy.canIUse('setNavigationBarColor')) {
+        wepy.setNavigationBarColor({
+          frontColor: '#000000',
+          backgroundColor: '#f6f1db'
+        })
+      }
 
       setTimeout(() => {
-        this.$redirect('/pages/index')
-        this.$switch('/pages/index')
-      }, 5000)
+        this.$redirect('/pages/task/index')
+        this.$switch('/pages/task/index')
+      }, 1000)
     }
   }
 </script>

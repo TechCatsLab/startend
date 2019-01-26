@@ -1,0 +1,64 @@
+<style lang="less">
+page {
+  height: 100%;
+}
+
+.task {
+  height: 100%;
+  padding: 0rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+</style>
+
+<template>
+  <view class="task">
+    <repeat for="{{tasks}}" key="index" item="task">
+      <tc-task :item="task" />
+    </repeat>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import { connect } from 'wepy-redux'
+
+  import BaseMixin from '../../mixins/base'
+  import TaskCard from '../../components/task'
+
+  @connect({
+    tasks (state) {
+      return state.tasks.tasks
+    }
+  })
+  export default class Task extends wepy.page {
+    config = {
+      navigationBarTitleText: '任务列表'
+    }
+
+    components = {
+      'tc-task': TaskCard
+    }
+
+    mixins = [BaseMixin]
+
+    computed = {
+    }
+
+    methods = {
+    }
+
+    events = {
+    }
+
+    onLoad() {
+      if (wepy.canIUse('setNavigationBarColor')) {
+        wepy.setNavigationBarColor({
+          frontColor: '#000000',
+          backgroundColor: '#f6f1db'
+        })
+      }
+    }
+  }
+</script>

@@ -30,7 +30,8 @@ export default class extends wepy.app {
   config = {
     pages: [
       'pages/welcome',
-      'pages/index'
+      'pages/task/index',
+      'pages/self/index'
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -39,25 +40,24 @@ export default class extends wepy.app {
       navigationBarTextStyle: 'black'
     },
     usingComponents: {
-      'van-button': '/components/vant/button/index'
+      'van-button': './components/vant/button/index',
+      'van-cell': './components/vant/cell/index',
+      'van-cell-group': './components/vant/cell-group/index',
+      'van-icon': './components/vant/icon/index'
     },
     tabBar: {
-      backgroundColor: '#f1f0ed',
+      backgroundColor: '#f6f1db',
       borderStyle: 'white',
       selectedColor: '#fca160',
       color: '#666',
       list: [
         {
-          pagePath: 'pages/index',
-          text: '云开发'
+          pagePath: 'pages/task/index',
+          text: '任务'
         },
         {
-          pagePath: 'pages/index',
-          text: '作品展示'
-        },
-        {
-          pagePath: 'pages/index',
-          text: '作者'
+          pagePath: 'pages/self/index',
+          text: '统计'
         }
       ]
     }

@@ -1,6 +1,6 @@
 import wepy from 'wepy'
 
-export default class DebugMixin extends wepy.mixin {
+export default class BaseMixin extends wepy.mixin {
   data = {
     mixin: 'This is mixin data.'
   }
