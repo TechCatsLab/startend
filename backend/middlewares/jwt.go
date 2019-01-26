@@ -44,7 +44,6 @@ func init() {
 
 				return nil, err
 			}
-
 			client := &http.Client{}
 			url := fmt.Sprintf("https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code", "wxd37a86f36f703828", "980cc565babd9ba31e76c1a597270117", req.Jscode)
 			reqest, err := http.NewRequest("GET", url, nil)
@@ -59,9 +58,8 @@ func init() {
 
 				return nil, err
 			}
-
-			body, err := ioutil.ReadAll(response.Body)
 			var session WxSession
+			body, err := ioutil.ReadAll(response.Body)
 			if err := json.Unmarshal(body, &session); err != nil {
 
 				return nil, err

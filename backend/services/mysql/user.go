@@ -1,6 +1,8 @@
 package mysql
 
-import "database/sql"
+import (
+	"database/sql"
+)
 
 type (
 	UserServiceImpl struct {
@@ -62,17 +64,12 @@ func (us *UserServiceImpl) create(user_id string) (uint32, error) {
 //Query user if register
 func (us *UserServiceImpl) QueryUid(user_id string) (uid uint32, err error) {
 	err = us.DB.QueryRow(userSqls[sqlQueryUser], user_id).Scan(&uid)
-
-	switch {
-	case err == errNoRows:
-		if uid, err = us.create(user_id); err != nil {
-
-			return
+	if err != nil {
+		if err.Error() == errNoRows.Error() {
+			if uid, err = us.create(user_id); err != nil {
+				return
+			}
 		}
-		break
-	case err != nil:
-
-		return 0, err
 	}
 
 	return
