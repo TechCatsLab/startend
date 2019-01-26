@@ -5,7 +5,7 @@
   .main {
     display: flex;
     flex-direction: row;
-    margin: 16rpx 12rpx 16rpx 12rpx;
+    margin: 16rpx 0rpx 16rpx 0rpx;
     padding: 24rpx 32rpx 24rpx 32rpx;
     background-image: linear-gradient(to right, #fdd8a8 0%, #e3a24b 100%);
     box-shadow: 10rpx 10rpx 20rpx 8rpx #e8e8e8;

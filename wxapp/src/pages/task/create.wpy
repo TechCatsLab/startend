@@ -1,0 +1,153 @@
+<style lang="less">
+page {
+  height: 100%;
+}
+
+.create-task {
+  height: 100%;
+  padding: 0rpx 12rpx 0rpx 12rpx;
+  display: flex;
+  flex-direction: column;
+
+  .seperator {
+    margin-top: 32rpx;
+    margin-bottom: 8rpx;
+  }
+
+  .title {
+    font-size: 36rpx;
+    color: #3e3841;
+    margin-left: 32rpx;
+  }
+
+  .create {
+    margin-top: 12rpx;
+    width: 720rpx;
+  }
+}
+</style>
+
+<template>
+  <view class="create-task">
+    <view class="seperator" />
+    <van-cell-group>
+      <van-field
+        label="任务名称"
+        type="textarea"
+        value="{{ content }}"
+        placeholder="请输入任务描述"
+        bind:change="onContentChange"
+        bind:focus="onContentFocus"
+      />
+      <van-field
+        label="开始时间"
+        type="text"
+        value="{{ start }}"
+        bind:focus="onStartFocus"
+      />
+      <van-field
+        label="结束时间"
+        type="text"
+        value="{{ end }}"
+        border="{{ false }}"
+        bind:focus="onEndFocus"
+      />
+      <view wx:if="{{ showDate === true }}">
+        <van-datetime-picker
+          type="date"
+          value="{{ currentDate }}"
+          bind:confirm="onDateConfirm"
+        />
+      </view>
+    </van-cell-group>
+    <van-button type="primary" custom-class="create" bind:click="onCreateTask">创建新任务</van-button>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import dayjs from 'dayjs'
+
+  import BaseMixin from '../../mixins/base'
+
+  export default class Create extends wepy.page {
+    config = {
+      navigationBarTitleText: '新建任务'
+    }
+
+    components = {
+    }
+
+    mixins = [BaseMixin]
+
+    data = {
+      showDate: false,
+      startFocused: false,
+      endFocused: false,
+      currentDate: new Date().getTime(),
+
+      content: '',
+      startTS: 0,
+      endTS: 0
+    }
+
+    computed = {
+      start() {
+        return dayjs.unix(this.startTS / 1000).format('YYYY-MM-DD')
+      },
+
+      end() {
+        return dayjs.unix(this.endTS / 1000).format('YYYY-MM-DD')
+      }
+    }
+
+    methods = {
+      onContentChange(e) {
+        this.content = e.detail
+        console.log(`onTitleChange ${e.detail}`)
+      },
+      onStartFocus() {
+        this.showDate = true
+        this.startFocused = true
+        this.endFocused = false
+        this.$apply()
+      },
+      onEndFocus() {
+        this.showDate = true
+        this.startFocused = false
+        this.endFocused = true
+        this.$apply()
+      },
+      onDateConfirm(e) {
+        this.showDate = false
+
+        if (this.startFocused) {
+          this.startTS = e.detail
+        }
+
+        if (this.endFocused) {
+          this.endTS = e.detail
+        }
+
+        this.$apply()
+      },
+      onCreateTask() {
+        this.showDate = false
+
+        console.log(`${this.content} ${this.startTS} ${this.endTS}`)
+      }
+    }
+
+    events = {
+    }
+
+    onLoad() {
+      if (wepy.canIUse('setNavigationBarColor')) {
+        wepy.setNavigationBarColor({
+          frontColor: '#000000',
+          backgroundColor: '#f6f1db'
+        })
+      }
+    }
+  }
+</script>

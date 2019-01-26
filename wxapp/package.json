@@ -17,6 +17,7 @@
   "author": "Feng Yifei <fengyfei@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "dayjs": "^1.8.0",
     "less": "^3.9.0",
     "redux": "^3.7.2",
     "redux-actions": "^2.2.1",

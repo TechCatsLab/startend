@@ -5,15 +5,21 @@ page {
 
 .task {
   height: 100%;
-  padding: 0rpx;
+  padding: 0rpx 12rpx 0rpx 12rpx;
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  .create {
+    margin-top: 12rpx;
+    width: 720rpx;
+  }
 }
 </style>
 
 <template>
   <view class="task">
+    <van-button type="primary" custom-class="create" bind:click="showCreateTaskDialog">创建新任务</van-button>
     <repeat for="{{tasks}}" key="index" item="task">
       <tc-task :item="task" />
     </repeat>
@@ -47,6 +53,9 @@ page {
     }
 
     methods = {
+      showCreateTaskDialog() {
+        this.$navigate('/pages/task/create')
+      }
     }
 
     events = {
