@@ -9,7 +9,6 @@ import (
 var (
 	// Service -
 	TaskService *mysql.TaskServiceImpl
-	UserService *mysql.UserServiceImpl
 )
 
 // Load all services.
@@ -18,15 +17,7 @@ func Load(db *sql.DB) error {
 		DB: db,
 	}
 
-	UserService = &mysql.UserServiceImpl{
-		DB: db,
-	}
-
 	if err := TaskService.Initialize(); err != nil {
-		panic(err)
-	}
-
-	if err := UserService.Initialize(); err != nil {
 		panic(err)
 	}
 

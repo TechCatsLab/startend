@@ -12,7 +12,7 @@ type (
 
 	Task struct {
 		ID      uint32
-		User_id uint32 `json:"userid"`
+		User_id string `json:"userid"`
 		Content string `json:"content"`
 		Comment string `json:"comment"`
 		Started time.Time
@@ -40,7 +40,7 @@ var (
 		`CREATE DATABASE IF NOT EXISTS task;`,
 		`CREATE TABLE IF NOT EXISTS task.task (
 			id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-			user_id BIGINT UNSIGNED NOT NULL,
+			user_id VARCHAR(512) NOT NULL,
 			content VARCHAR(512) NOT NULL DEFAULT ' ',
 			comment VARCHAR(512) NOT NULL DEFAULT ' ',
 			started DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -51,8 +51,8 @@ var (
 		) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;`,
 		`INSERT INTO task.task (user_id,content,started,ended) VALUES(?,?,?,?)`,
 		`SELECT content,comment,started,ended,stoped,status FROM task.task WHERE id = ? LOCK IN SHARE MODE`,
-		`SELECT id,content,comment,started,ended,stoped,status FROM task.task WHERE user_id = ? LIMIT (?-1)*10, 10 LOCK IN SHARE MODE`,
-		`SELECT id,content,comment,started,ended,stoped FROM task.task WHERE user_id = ? and status = ? LIMIT (?-1)*10, 10 LOCK IN SHARE MODE`,
+		`SELECT id,content,comment,started,ended,stoped,status FROM task.task WHERE user_id = ? LIMIT ?, 10 LOCK IN SHARE MODE`,
+		`SELECT id,content,comment,started,ended,stoped FROM task.task WHERE user_id = ? and status = ? LIMIT ?, 10 LOCK IN SHARE MODE`,
 		`UPDATE task.task SET status = ? , comment = ? , stoped = NOW() WHERE id = ? LIMIT 1`,
 	}
 )
@@ -75,7 +75,7 @@ func (ts *TaskServiceImpl) Initialize() error {
 }
 
 //Create task
-func (ts *TaskServiceImpl) Create(user_id uint32, content string, started, ended time.Time) error {
+func (ts *TaskServiceImpl) Create(user_id string, content string, started, ended time.Time) error {
 	result, err := ts.DB.Exec(taskSqls[sqlInsert], user_id, content, started, ended)
 	if err != nil {
 
@@ -114,7 +114,7 @@ func (ts *TaskServiceImpl) QueryById(id uint32) (*Task, error) {
 }
 
 //Query by only userid
-func (ts *TaskServiceImpl) QueryByUserId(user_id uint32, page int) ([]*Task, error) {
+func (ts *TaskServiceImpl) QueryByUserId(user_id string, page int) ([]*Task, error) {
 	var (
 		id      uint32
 		content string
@@ -135,7 +135,7 @@ func (ts *TaskServiceImpl) QueryByUserId(user_id uint32, page int) ([]*Task, err
 	defer rows.Close()
 
 	for rows.Next() {
-		if err := rows.Scan(&content, &comment, &started, &ended, &stoped, &status); err != nil {
+		if err := rows.Scan(&id, &content, &comment, &started, &ended, &stoped, &status); err != nil {
 
 			return nil, err
 		}
@@ -156,7 +156,7 @@ func (ts *TaskServiceImpl) QueryByUserId(user_id uint32, page int) ([]*Task, err
 }
 
 //query from user's status
-func (ts *TaskServiceImpl) QueryByStatus(user_id uint32, status uint8, page int) ([]*Task, error) {
+func (ts *TaskServiceImpl) QueryByStatus(user_id string, status uint8, page int) ([]*Task, error) {
 	var (
 		id      uint32
 		content string
@@ -199,7 +199,7 @@ func (ts *TaskServiceImpl) QueryByStatus(user_id uint32, status uint8, page int)
 
 //stop the task
 func (ts *TaskServiceImpl) Stop(comment string, id uint32) error {
-	result, err := ts.DB.Exec(taskSqls[sqlModifyStatus], Stop, comment)
+	result, err := ts.DB.Exec(taskSqls[sqlModifyStatus], Stop, comment, id)
 	if err != nil {
 
 		return err
@@ -215,7 +215,7 @@ func (ts *TaskServiceImpl) Stop(comment string, id uint32) error {
 
 //success the task
 func (ts *TaskServiceImpl) Success(comment string, id uint32) error {
-	result, err := ts.DB.Exec(taskSqls[sqlModifyStatus], Success, comment)
+	result, err := ts.DB.Exec(taskSqls[sqlModifyStatus], Success, comment, id)
 	if err != nil {
 
 		return err
